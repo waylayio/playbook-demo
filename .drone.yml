@@ -1,0 +1,33 @@
+kind: pipeline
+name: build
+
+steps:
+  - name: build latest docker image
+    image: plugins/docker
+    settings:
+      registry: eu.gcr.io
+      repo: eu.gcr.io/quiet-mechanic-140114/no-code-demo
+      tags:
+        - ${DRONE_COMMIT_SHA:0:8}-${DRONE_BUILD_CREATED}
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      branch: master
+      event: push
+
+  - name: build tagged docker image
+    image: plugins/docker
+    settings:
+      registry: eu.gcr.io
+      repo: eu.gcr.io/quiet-mechanic-140114/${DRONE_REPO_NAME}
+      tags:
+        - ${DRONE_TAG}
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - tag
