@@ -1,12 +1,16 @@
 kind: pipeline
-name: build
+name: Test & Build
 
 steps:
-  - name: build latest docker image
-    image: plugins/docker
+  - name: build
+    image: node:10
     commands:
       - yarn install --offline --non-interactive --frozen-lockfile
+      - yarn lint
       - yarn build
+
+  - name: build latest docker image
+    image: plugins/docker
     settings:
       registry: eu.gcr.io
       repo: eu.gcr.io/quiet-mechanic-140114/no-code-demo
@@ -16,21 +20,3 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
-    when:
-      branch: master
-      event: push
-
-  - name: build tagged docker image
-    image: plugins/docker
-    settings:
-      registry: eu.gcr.io
-      repo: eu.gcr.io/quiet-mechanic-140114/${DRONE_REPO_NAME}
-      tags:
-        - ${DRONE_TAG}
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-    when:
-      event:
-        - tag
