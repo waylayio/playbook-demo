@@ -4,6 +4,9 @@ name: build
 steps:
   - name: build latest docker image
     image: plugins/docker
+    commands:
+      - yarn install --offline --non-interactive --frozen-lockfile
+      - yarn build
     settings:
       registry: eu.gcr.io
       repo: eu.gcr.io/quiet-mechanic-140114/no-code-demo
