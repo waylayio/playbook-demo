@@ -1,0 +1,19 @@
+0.0.0.0
+
+# allow variable interpolation in html files
+# to inject environment variables into the window object
+templates {
+  path /
+  ext .html
+}
+
+# index rewrite for React-Router and pushState
+rewrite {
+  to {path} /
+}
+
+# rewrite http to https
+redir 301 {
+  if {>X-Forwarded-Proto} is http
+  /  https://{host}{path}
+}
