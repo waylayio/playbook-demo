@@ -103,7 +103,7 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
     if (field.name === 'resource') return <ResourceIdField constraint={field} onChange={handleChange}/>
     if ('format' in field) {
       switch (field.format.type) {
-        case 'numeric':
+        case 'integer':
           return <NumericField field={field} onChange={handleChange}/>
         case 'string':
           return <StringField field={field} onChange={handleChange}/>
@@ -118,7 +118,7 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
       }
     } else {
       switch (field.type) {
-        case 'numeric':
+        case 'integer':
           return <NumericField field={field} onChange={handleChange}/>
         case 'string':
           return <StringField field={field} onChange={handleChange}/>
