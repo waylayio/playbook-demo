@@ -1,0 +1,89 @@
+#form-wrapper {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.select-type {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.select-org {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.select-type-modal {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#content__modal {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#main-content {
+  width: 75%;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+#select-segment {
+ margin-bottom: 20px;
+}
+
+.form-field-button{
+  padding-left: 10px;
+}
+.form-field-info div{
+  display: inline-block;
+  vertical-align: middle;
+}
+.form-field-info{
+  padding-bottom: 5px;
+}
+
+.close-modal-icon{
+  float: right;
+}
+
+.center-spinner {
+  margin: auto;
+  display: block;
+}
+
+/* default is too dark */
+body.dimmed .ui.dimmer {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.center {
+  margin: 0 auto;
+  width: 50%;
+  padding: 10px;
+}
+
+textarea {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+body {
+  background: rgb(247, 247, 247)
+}
+
+.errorMessage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
