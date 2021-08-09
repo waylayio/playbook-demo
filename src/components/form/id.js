@@ -5,22 +5,21 @@ import { useAsync } from 'react-async'
 import { Form, Select } from '@waylay/react-components'
 
 const dataFetcher = async () => {
-  const queryString = '!(_exists_:resourceTypeId)'
-  return waylay.resources.search({ q: queryString })
+  return waylay.resources.search({  })
 }
 
 const filterFetcher = async (filter) => {
-  const queryString = `!(_exists_:resourceTypeId) AND id:*${filter}*`
+  const queryString = `id:*${filter}*`
   return waylay.resources.search({ q: queryString })
 }
 
-function ResourceIdField ({ constraint, onChange }) {
+function ResourceIdField ({ field, onChange }) {
   const handleUpdateValue = (option) => {
     if (option) {
       const { value } = option
-      onChange(constraint.name, value, validateField(value))
+      onChange(field.name, value, validateField(value))
     } else {
-      onChange(constraint.name, undefined, validateField(undefined))
+      onChange(field.name, undefined, validateField(undefined))
     }
   }
 
@@ -51,12 +50,12 @@ function ResourceIdField ({ constraint, onChange }) {
     <Form.Field>
       <div className='form-field-info'>
         <div>
-          <label><p>{constraint.description || constraint.name} {constraint.required ? <font color='red'>*</font> : null}</p></label>
+          <label><p>{field.name} {field.mandatory ? <font color='red'>*</font> : null}</p></label>
         </div>
       </div>
       <Creatable
         key={data}
-        required={constraint.required}
+        required={field.mandatory}
         defaultOptions={optionData}
         onChange={handleUpdateValue}
         loadOptions={loadOptions}

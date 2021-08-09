@@ -7,9 +7,7 @@ import ajv from '../../lib/validation'
 import { getResourceConstraints, getResourceConstraintsSchema } from '../../lib/requests'
 import NumericField from '../../components/form/numeric'
 import StringField from '../../components/form/string'
-import ArrayField from '../../components/form/array'
 import EnumField from '../../components/form/enum'
-import ResourceField from '../../components/form/resourceref'
 import BooleanField from '../../components/form/boolean'
 import ObjectField from '../../components/form/object'
 import FormErrors from '../../components/common/error'
@@ -109,8 +107,6 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
           return <NumericField field={field} onChange={handleChange}/>
         case 'string':
           return <StringField field={field} onChange={handleChange}/>
-        case 'array':
-          return <ArrayField field={field} onChange={handleChange}/>
         case 'boolean':
           return <BooleanField field={field} onChange={handleChange}/>
         case 'enum':
@@ -126,8 +122,6 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
           return <NumericField field={field} onChange={handleChange}/>
         case 'string':
           return <StringField field={field} onChange={handleChange}/>
-        case 'array':
-          return <ArrayField field={field} onChange={handleChange}/>
         case 'boolean':
           return <BooleanField field={field} onChange={handleChange}/>
         case 'enum':
