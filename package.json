@@ -7,8 +7,6 @@
     "@emotion/styled": "^10.0.27",
     "@waylay/client": "^2.30.0",
     "@waylay/react-components": "^2.24.0",
-    "ajv": "^6.12.2",
-    "ajv-keywords": "^3.4.1",
     "codemirror": "^5.55.0",
     "date-fns": "^2.14.0",
     "jwt-decode": "^2.2.0",
@@ -24,9 +22,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-toast-notifications": "^2.4.0",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.2"
+    "react-toast-notifications": "^2.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
