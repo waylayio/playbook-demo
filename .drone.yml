@@ -6,7 +6,6 @@ steps:
     image: node:10
     commands:
       - yarn install --offline --non-interactive --frozen-lockfile
-      - yarn lint
       - yarn build
 
   - name: build latest docker image
