@@ -13,8 +13,7 @@ steps:
     settings:
       registry: eu.gcr.io
       repo: eu.gcr.io/quiet-mechanic-140114/no-code-demo
-      tags:
-        - ${DRONE_COMMIT_SHA:0:8}-${DRONE_BUILD_CREATED}
+      auto_tag: true
       username:
         from_secret: docker_username
       password:
