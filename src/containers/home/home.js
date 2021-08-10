@@ -50,10 +50,6 @@ function Home () {
     setSelectedResource(selectedOption)
   }
 
-  const clearResource = () => {
-    setSelectedResource(undefined)
-  }
-
   if (!isAuthenticated()) {
     return <Redirect to='/login'/>
   } else {

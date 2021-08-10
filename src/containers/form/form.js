@@ -3,8 +3,6 @@ import { Button, Form, Loader } from '@waylay/react-components'
 import { useAsync } from 'react-async'
 import { omit } from 'lodash'
 import waylay from '../../lib/waylay'
-import ajv from '../../lib/validation'
-import { getResourceConstraints, getResourceConstraintsSchema } from '../../lib/requests'
 import NumericField from '../../components/form/numeric'
 import StringField from '../../components/form/string'
 import EnumField from '../../components/form/enum'
@@ -88,15 +86,6 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
 
   const handleFormCancel = () => {
     onSubmitOrCancel()
-  }
-
-  const setErrors = (errors) => {
-    errors.forEach((error) => {
-      setFormErrors(state => ({
-        ...state,
-        [error.dataPath.substr(1) || error.params.missingProperty]: { value: error.message }
-      }))
-    })
   }
 
   const formFieldSelecter = (field) => {
