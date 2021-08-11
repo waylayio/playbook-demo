@@ -103,7 +103,7 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
         case 'object':
           return <ObjectField field={field} onChange={handleChange}/>
         default:
-          return null
+          return <StringField field={field} onChange={handleChange}/>
       }
     } else {
       switch (field.type) {
@@ -118,7 +118,7 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
         case 'object':
           return <ObjectField field={field} onChange={handleChange}/>
         default:
-          return null
+          return <StringField field={field} onChange={handleChange}/>
       }
     }
   }
