@@ -93,6 +93,9 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
     if ('format' in field) {
       switch (field.format.type) {
         case 'integer':
+        case 'double':
+        case 'long':
+        case 'float':
           return <NumericField field={field} onChange={handleChange}/>
         case 'string':
           return <StringField field={field} onChange={handleChange}/>
@@ -108,6 +111,9 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
     } else {
       switch (field.type) {
         case 'integer':
+        case 'double':
+        case 'long':
+        case 'float':
           return <NumericField field={field} onChange={handleChange}/>
         case 'string':
           return <StringField field={field} onChange={handleChange}/>
