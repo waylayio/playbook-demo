@@ -5,6 +5,7 @@ import MainMenu from '../../components/menu/menu'
 import ProvisioningForm from '../form/form'
 import SelectTemplate from './selectTemplate'
 import SelectResource from './selectResource'
+import NaturalLanguageInput from './naturalLanguageInput'
 import { Segment, concrete, colors } from '@waylay/react-components'
 import styled from '@emotion/styled'
 
@@ -60,6 +61,9 @@ function Home () {
         </SidebarContainer>
         <ContentContainer>
           <div id='main-content'>
+            <div id='select-segment'>
+              <NaturalLanguageInput/>
+            </div>
             <div id='select-segment'>
               <p> 1. Select template</p>
               <Segment>

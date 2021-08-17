@@ -9996,6 +9996,11 @@ react-select@^3.1.0:
     react-input-autosize "^3.0.0"
     react-transition-group "^4.3.0"
 
+react-speech-recognition@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.npmjs.org/react-speech-recognition/-/react-speech-recognition-3.8.2.tgz#c82e187db92e32e506f0593d80a2347f2079e0fd"
+  integrity sha512-ZbA8wNNdWPAiN7tHsMc/cgfRkssAQwL3F8yMDEbuxLCT0II7YrNurNb3hAq5X58+zMn7YQO+S3OZt0mp5QA38w==
+
 react-textarea-autosize@^8.3.2:
   version "8.3.3"
   resolved "https://npm.waylay.io/react-textarea-autosize/-/react-textarea-autosize-8.3.3/f70913945369da453fd554c168f6baacd1fa04d8.tgz#f70913945369da453fd554c168f6baacd1fa04d8"
