@@ -2,7 +2,7 @@ import React  from 'react'
 import { Button, Message } from '@waylay/react-components'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
-function NaturalLanguageInput () {
+function NaturalLanguageInput (props) {
     /*
     const speechGrammar = `
     #JSGF V1.0;
@@ -33,6 +33,11 @@ function NaturalLanguageInput () {
 
     const stopListening = () => {
         SpeechRecognition.stopListening();
+
+        // call onTranscript handler if set
+        if (props.onTranscript) {
+            props.onTranscript(transcript);
+        }
     }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {

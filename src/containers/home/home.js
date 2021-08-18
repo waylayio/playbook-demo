@@ -51,6 +51,10 @@ function Home () {
     setSelectedResource(selectedOption)
   }
 
+  const handleNaturalLanguageTranscript = (transcript) => {
+    console.log(transcript)
+  }
+
   if (!isAuthenticated()) {
     return <Redirect to='/login'/>
   } else {
@@ -62,7 +66,7 @@ function Home () {
         <ContentContainer>
           <div id='main-content'>
             <div id='select-segment'>
-              <NaturalLanguageInput/>
+              <NaturalLanguageInput onTranscript={handleNaturalLanguageTranscript}/>
             </div>
             <div id='select-segment'>
               <p> 1. Select template</p>
