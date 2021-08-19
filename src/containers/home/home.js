@@ -8,6 +8,7 @@ import SelectResource from './selectResource'
 import NaturalLanguageInput from './naturalLanguageInput'
 import { Segment, concrete, colors } from '@waylay/react-components'
 import styled from '@emotion/styled'
+import { parsePlaybookLaunchCommand } from '../../lib/nlp'
 
 const LayoutContainer = styled('div')`
   display: flex;
@@ -38,6 +39,7 @@ const SidebarContainer = styled('div')`
 function Home () {
   const [selectedTemplate, setSelectedTemplate] = useState()
   const [selectedResource, setSelectedResource] = useState()
+  const [transcriptError, setTranscriptError] = useState()
 
   const handleTemplateChange = (selectedOption) => {
     setSelectedTemplate(selectedOption)
@@ -52,7 +54,10 @@ function Home () {
   }
 
   const handleNaturalLanguageTranscript = (transcript) => {
-    console.log(transcript)
+    var cmd = parsePlaybookLaunchCommand(transcript)
+    console.log(cmd)
+
+    setTranscriptError(cmd.error)
   }
 
   if (!isAuthenticated()) {
@@ -66,7 +71,7 @@ function Home () {
         <ContentContainer>
           <div id='main-content'>
             <div id='select-segment'>
-              <NaturalLanguageInput onTranscript={handleNaturalLanguageTranscript}/>
+              <NaturalLanguageInput onTranscript={handleNaturalLanguageTranscript} error={transcriptError}/>
             </div>
             <div id='select-segment'>
               <p> 1. Select template</p>
