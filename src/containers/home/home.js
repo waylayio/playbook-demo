@@ -8,7 +8,7 @@ import SelectResource from './selectResource'
 import NaturalLanguageInput from './naturalLanguageInput'
 import { Segment, concrete, colors } from '@waylay/react-components'
 import styled from '@emotion/styled'
-import { parsePlaybookLaunchCommand } from '../../lib/nlp'
+import { parsePlaybookLaunchCommand, matchPlaybookLaunchCommandToCatalog } from '../../lib/nlp'
 
 const LayoutContainer = styled('div')`
   display: flex;
@@ -54,10 +54,13 @@ function Home () {
   }
 
   const handleNaturalLanguageTranscript = (transcript) => {
-    var cmd = parsePlaybookLaunchCommand(transcript)
+    var cmd = parsePlaybookLaunchCommand(transcript || 'run Test Playbook on resource Testbed with input threshold set to 40')
     console.log(cmd)
 
     setTranscriptError(cmd.error)
+    if (!cmd.error) {
+      matchPlaybookLaunchCommandToCatalog(cmd).then(result => {})
+    }
   }
 
   if (!isAuthenticated()) {
@@ -99,7 +102,6 @@ function Home () {
           </div>
         </ContentContainer>
       </LayoutContainer>
-
     )
   }
 }

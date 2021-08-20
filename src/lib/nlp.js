@@ -18,8 +18,9 @@ grammar waylay.playbooks.nlp;
 public <command> = <run_keyword> <playbook> <resource_keyword> <resource> [with <parameter_keyword> <parameters>];
 `
 */
+import waylay from './waylay'
 
-const PLAYBOOK_REGEX = /(?<=run|init|launch )(?<playbook>.*?)(?= on resource)/gm
+const PLAYBOOK_REGEX = /(?<=(run|init|launch) )(?<playbook>.*?)(?= on resource)/gm
 const RESOURCE_REGEX = /(?<=on resource )(?<resource>.*?)(?= with parameters?| with inputs?|$)/gm
 const INPUTS_REGEX   = /(?<input>\w+) (?:set to|equals) (?<value>\w+)(?: and )?/gm
 
@@ -70,7 +71,26 @@ function parsePlaybookLaunchCommand(transcript) {
     return cmd
 }
 
+async function fetchTemplates(name) {
+    return waylay.templates.list(name, { hits: 100 });
+}
+
+async function fetchResources(name) {
+    return waylay.resources.search({q:`name:*${name}*`})
+}
+
+async function matchPlaybookLaunchCommandToCatalog(cmd) {
+    // match the template name
+    var templates = await fetchTemplates(cmd.playbook);
+    console.log(templates);
+
+    // match the resource
+    var resources = await fetchResources(cmd.resource);
+    console.log(resources);
+}
+
 export {
     PlaybookLaunchCommand,
-    parsePlaybookLaunchCommand
+    parsePlaybookLaunchCommand,
+    matchPlaybookLaunchCommandToCatalog
 }
