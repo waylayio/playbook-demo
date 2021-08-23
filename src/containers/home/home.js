@@ -42,6 +42,7 @@ function Home () {
 
   const [selectedTemplate, setSelectedTemplate] = useState()
   const [selectedResource, setSelectedResource] = useState()
+  const [taskVariables, setTaskVariables] = useState()
 
   const handleTemplateChange = (selectedOption) => {
     setSelectedTemplate(selectedOption)
@@ -68,9 +69,10 @@ function Home () {
         return
       }
 
-      // update input form with tokens extracted from the spoken command
+      // update input forms with tokens extracted from the spoken command
       setSelectedTemplate({ value: cmd.playbook, label: cmd.playbook })
       setSelectedResource({ value: cmd.resource, label: cmd.resource })
+      setTaskVariables(cmd.inputs)
     })
   }
 
@@ -106,7 +108,9 @@ function Home () {
                   <Segment>
                     <ProvisioningForm templateId={selectedTemplate ? selectedTemplate.value : undefined}
                                       resource={selectedResource ? selectedResource.value : undefined}
-                                      key={[selectedTemplate, selectedResource]} onSubmitOrCancel={clearTemplate}/>
+                                      key={[selectedTemplate, selectedResource]} 
+                                      onSubmitOrCancel={clearTemplate}
+                                      inputValues={taskVariables}/>
                   </Segment>
                 </div>)
               : null}
