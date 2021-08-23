@@ -19,6 +19,8 @@ public <command> = <run_keyword> <playbook> <resource_keyword> <resource> [with 
 `
 */
 import waylay from './waylay'
+import Fuse from 'fuse.js'
+import _ from 'lodash'
 
 const PLAYBOOK_REGEX = /(?<=(run|init|launch) )(?<playbook>.*?)(?= on resource)/gm
 const RESOURCE_REGEX = /(?<=on resource )(?<resource>.*?)(?= with parameters?| with inputs?|$)/gm
@@ -79,14 +81,40 @@ async function fetchResources(name) {
     return waylay.resources.search({q:`name:*${name}*`})
 }
 
+function findBestMatch(collection, keys, searchTerm) {
+    const fuse = new Fuse(collection, {
+        includeScore: true,
+        keys: keys
+    })
+
+    var results = fuse.search(searchTerm)
+    return _.chain(results)
+        .sortBy([ 'score' ])
+        .map(res => res.item)
+        .first()
+        .value()
+} 
+
 async function matchPlaybookLaunchCommandToCatalog(cmd) {
     // match the template name
-    var templates = await fetchTemplates(cmd.playbook);
-    console.log(templates);
+    var templates = await fetchTemplates(cmd.playbook)    
+    var bestTemplate = findBestMatch(templates, [ 'name' ], cmd.playbook)
+    
+    // update launch command
+    if (!bestTemplate) {
+        cmd.error = `No catalog match found for the playbook named ${cmd.playbook}`
+    }
+    cmd.playbook = bestTemplate?.name
 
     // match the resource
-    var resources = await fetchResources(cmd.resource);
-    console.log(resources);
+    var resources = await fetchResources(cmd.resource)
+    var bestResource = findBestMatch(resources.values, [ 'name' ], cmd.resource)
+    
+    // update launch command
+    if (!bestResource) {
+        cmd.error = `No digital twin match found for the resource named ${cmd.resource}`
+    }
+    cmd.resource = bestResource?.id
 }
 
 export {

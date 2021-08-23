@@ -59,7 +59,12 @@ function Home () {
 
     setTranscriptError(cmd.error)
     if (!cmd.error) {
-      matchPlaybookLaunchCommandToCatalog(cmd).then(result => {})
+      matchPlaybookLaunchCommandToCatalog(cmd).then(() => {
+        if (!cmd.error) {
+          setSelectedTemplate({ value: cmd.playbook, label: cmd.playbook })
+          setSelectedResource({ value: cmd.resource, label: cmd.resource })
+        }
+      })
     }
   }
 
