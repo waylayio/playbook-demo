@@ -9,6 +9,7 @@ import NaturalLanguageInput from './naturalLanguageInput'
 import { Segment, concrete, colors } from '@waylay/react-components'
 import styled from '@emotion/styled'
 import { parsePlaybookLaunchCommand, matchPlaybookLaunchCommandToCatalog } from '../../lib/nlp'
+import useWindow from '../../hooks/useWindow'
 
 const LayoutContainer = styled('div')`
   display: flex;
@@ -37,9 +38,10 @@ const SidebarContainer = styled('div')`
 `
 
 function Home () {
+  const { addCustomToast } = useWindow()
+
   const [selectedTemplate, setSelectedTemplate] = useState()
   const [selectedResource, setSelectedResource] = useState()
-  const [transcriptError, setTranscriptError] = useState()
 
   const handleTemplateChange = (selectedOption) => {
     setSelectedTemplate(selectedOption)
@@ -55,17 +57,21 @@ function Home () {
 
   const handleNaturalLanguageTranscript = (transcript) => {
     var cmd = parsePlaybookLaunchCommand(transcript || 'run Test Playbook on resource Testbed with input threshold set to 40')
-    console.log(cmd)
-
-    setTranscriptError(cmd.error)
-    if (!cmd.error) {
-      matchPlaybookLaunchCommandToCatalog(cmd).then(() => {
-        if (!cmd.error) {
-          setSelectedTemplate({ value: cmd.playbook, label: cmd.playbook })
-          setSelectedResource({ value: cmd.resource, label: cmd.resource })
-        }
-      })
+    if (cmd.error) {
+      addCustomToast(cmd.error, { appearance: 'error' })
+      return
     }
+
+    matchPlaybookLaunchCommandToCatalog(cmd).then(() => {
+      if (cmd.error) {
+        addCustomToast(cmd.error, { appearance: 'error' })
+        return
+      }
+
+      // update input form with tokens extracted from the spoken command
+      setSelectedTemplate({ value: cmd.playbook, label: cmd.playbook })
+      setSelectedResource({ value: cmd.resource, label: cmd.resource })
+    })
   }
 
   if (!isAuthenticated()) {
@@ -79,7 +85,7 @@ function Home () {
         <ContentContainer>
           <div id='main-content'>
             <div id='select-segment'>
-              <NaturalLanguageInput onTranscript={handleNaturalLanguageTranscript} error={transcriptError}/>
+              <NaturalLanguageInput onTranscript={handleNaturalLanguageTranscript}/>
             </div>
             <div id='select-segment'>
               <p> 1. Select template</p>

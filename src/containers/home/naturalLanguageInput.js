@@ -3,23 +3,6 @@ import { Button, Message, Tooltip } from '@waylay/react-components'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 function NaturalLanguageInput (props) {
-    /*
-    const speechGrammar = `
-    #JSGF V1.0;
-    grammar waylay.playbooks.nlp;
-    
-    <run> = ( run | init | initialize );
-    <playbook> = ( alpha | beta | gamma );
-    <resource> = ( x | y | z );
-    <variable> = ( a | b | c );
-    <value> = ( true | false | 1 | 2 | 3 | 4 | 5 );
-    <parameter> = <variable> ( set to | equals ) <value>;
-    <parameters> = <parameter> | ( <parameter> and <parameters> );
-
-    public <command> = <run> <playbook> on resource <resource> [ with parameters <parameters> ];
-    `
-    */
-
     const {
         transcript,
         listening,
@@ -63,13 +46,6 @@ function NaturalLanguageInput (props) {
                 ? ( <div>
                         <br/>
                         <Message outline>{transcript}</Message>
-                    </div> ) 
-                : null }
-
-            { props.error && transcript
-                ? ( <div>
-                        <br/>
-                        <Message kind='warning' outline>{props.error}</Message>
                     </div> ) 
                 : null }
         </div>  
