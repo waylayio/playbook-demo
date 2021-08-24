@@ -95,6 +95,34 @@ function findBestMatch(collection, keys, searchTerm) {
         .value()
 } 
 
+function marshalInputValue(value, type, format) {
+    try {
+        switch (type) {
+            case 'integer':
+                return _.toInteger(value)
+            case 'double':
+            case 'long':
+            case 'float':
+                return _.toNumber(value)
+            case 'string':
+                return _.toString(value)
+            case 'boolean':
+                return (value === 'true')
+            case 'enum':
+                return (format && format.values)
+                    ? ( format.values.includes(value) ? value : null )
+                    : value
+            case 'object':
+                return JSON.parse(value)
+            default:       
+                return value
+        }
+    }
+    catch {
+        return undefined;
+    }
+}
+
 async function matchPlaybookLaunchCommandToCatalog(cmd) {
     // match the template name
     var templates = await fetchTemplates(cmd.playbook)    
@@ -115,6 +143,22 @@ async function matchPlaybookLaunchCommandToCatalog(cmd) {
         cmd.error = `No digital twin match found for the resource named ${cmd.resource}`
     }
     cmd.resource = bestResource?.id
+
+    // match the input parameters
+    if (bestTemplate) {
+        var matchedInputs = {}
+        _.forIn(cmd.inputs, (val, key) => {
+            var bestInput = findBestMatch(bestTemplate.variables, [ 'name' ], key);
+            if (bestInput) {
+                // marshal the value to the proper type
+                matchedInputs[bestInput.name] = marshalInputValue(val, bestInput.type, bestInput.format);
+            }
+        })
+
+        // update command
+        cmd.inputs = matchedInputs;
+        console.log(cmd)
+    }
 }
 
 export {

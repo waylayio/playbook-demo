@@ -50,6 +50,7 @@ function Home () {
 
   const clearTemplate = () => {
     setSelectedTemplate(undefined)
+    setSelectedResource(undefined)
   }
 
   const handleResourceChange = (selectedOption) => {
@@ -87,7 +88,7 @@ function Home () {
         <ContentContainer>
           <div id='main-content'>
             <div id='select-segment'>
-              <NaturalLanguageInput onTranscript={handleNaturalLanguageTranscript}/>
+              <NaturalLanguageInput onListening={clearTemplate} onTranscript={handleNaturalLanguageTranscript}/>
             </div>
             <div id='select-segment'>
               <p> 1. Select template</p>

@@ -10,6 +10,10 @@ function NaturalLanguageInput (props) {
     } = useSpeechRecognition();
 
     const startListening = () => {
+        if (props.onListening) {
+            props.onListening()
+        }
+
         resetTranscript();
         SpeechRecognition.startListening({ continuous: true })
     }
