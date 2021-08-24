@@ -4,7 +4,7 @@ const speechGrammar = `
 grammar waylay.playbooks.nlp;
 
 <run_keyword> = ( run | init | launch );
-<resource_keyword> = ( on resource );
+<resource_keyword> = ( on resource | device );
 
 <playbook> = ...;
 <resource> = ...;
@@ -22,8 +22,8 @@ import waylay from './waylay'
 import Fuse from 'fuse.js'
 import _ from 'lodash'
 
-const PLAYBOOK_REGEX = /(?<=(run|init|launch) )(?<playbook>.*?)(?= on resource)/gm
-const RESOURCE_REGEX = /(?<=on resource )(?<resource>.*?)(?= with parameters?| with inputs?|$)/gm
+const PLAYBOOK_REGEX = /(?<=(run|init|launch) )(?<playbook>.*?)(?= on (resource|device))/gm
+const RESOURCE_REGEX = /(?<=on (resource|device) )(?<resource>.*?)(?= with parameters?| with inputs?|$)/gm
 const INPUTS_REGEX   = /(?<input>\w+) (?:set to|equals) (?<value>\w+)(?: and )?/gm
 
 class PlaybookLaunchCommand {
