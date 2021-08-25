@@ -5550,6 +5550,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://npm.waylay.io/functional-red-black-tree/-/functional-red-black-tree-1.0.1/1b0ab3bd553b2a0d6399d29c0e3ea0b252078327.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+fuse.js@^6.4.6:
+  version "6.4.6"
+  resolved "https://registry.npmjs.org/fuse.js/-/fuse.js-6.4.6.tgz#62f216c110e5aa22486aff20be7896d19a059b79"
+  integrity sha512-/gYxR/0VpXmWSfZOIPS3rWwU8SHgsRTwWuXhyb2O6s7aRuVtHtxCkR33bNYu3wyLyNx/Wpv0vU7FZy8Vj53VNw==
+
 generate-function@^2.0.0:
   version "2.3.1"
   resolved "https://npm.waylay.io/generate-function/-/generate-function-2.3.1/f069617690c10c868e73b8465746764f97c3479f.tgz#f069617690c10c868e73b8465746764f97c3479f"
@@ -9995,6 +10000,11 @@ react-select@^3.1.0:
     prop-types "^15.6.0"
     react-input-autosize "^3.0.0"
     react-transition-group "^4.3.0"
+
+react-speech-recognition@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.npmjs.org/react-speech-recognition/-/react-speech-recognition-3.8.2.tgz#c82e187db92e32e506f0593d80a2347f2079e0fd"
+  integrity sha512-ZbA8wNNdWPAiN7tHsMc/cgfRkssAQwL3F8yMDEbuxLCT0II7YrNurNb3hAq5X58+zMn7YQO+S3OZt0mp5QA38w==
 
 react-textarea-autosize@^8.3.2:
   version "8.3.3"

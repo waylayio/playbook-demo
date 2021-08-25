@@ -11,6 +11,7 @@ import ObjectField from '../../components/form/object'
 import FormErrors from '../../components/common/error'
 import useWindow from '../../hooks/useWindow'
 import ResourceIdField from '../../components/form/id'
+import _ from 'lodash'
 
 const dataFetcher = async ({ templateId }) => {
   if (!templateId) return
@@ -26,7 +27,7 @@ const dataFetcher = async ({ templateId }) => {
 
 const startTaskDeffered = ([form]) => waylay.tasks.create(form)
 
-function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
+function ProvisioningForm ({ templateId, resource, onSubmitOrCancel, inputValues }) {
   const { addCustomToast } = useWindow()
 
   const { data: result, error, isLoading } = useAsync({
@@ -53,8 +54,8 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
   const [postError, setPostError] = useState('')
 
   useEffect(() => {
-    setForm(state => ({ ...state, resourceTypeId: templateId }))
-  }, [templateId])
+    setForm(state => _.merge(state, { resourceTypeId: templateId }, inputValues))
+  }, [templateId, inputValues])
 
   const handleChange = (field, value, error) => {
     setForm((state) => {
@@ -96,17 +97,17 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
         case 'double':
         case 'long':
         case 'float':
-          return <NumericField field={field} onChange={handleChange}/>
+          return <NumericField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'string':
-          return <StringField field={field} onChange={handleChange}/>
+          return <StringField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'boolean':
-          return <BooleanField field={field} onChange={handleChange}/>
+          return <BooleanField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'enum':
-          return <EnumField field={field} onChange={handleChange}/>
+          return <EnumField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'object':
-          return <ObjectField field={field} onChange={handleChange}/>
+          return <ObjectField field={field} onChange={handleChange} value={form[field.name]}/>
         default:
-          return <StringField field={field} onChange={handleChange}/>
+          return <StringField field={field} onChange={handleChange} value={form[field.name]}/>
       }
     } else {
       switch (field.type) {
@@ -114,17 +115,17 @@ function ProvisioningForm ({ templateId, resource, onSubmitOrCancel }) {
         case 'double':
         case 'long':
         case 'float':
-          return <NumericField field={field} onChange={handleChange}/>
+          return <NumericField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'string':
-          return <StringField field={field} onChange={handleChange}/>
+          return <StringField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'boolean':
-          return <BooleanField field={field} onChange={handleChange}/>
+          return <BooleanField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'enum':
-          return <EnumField field={field} onChange={handleChange}/>
+          return <EnumField field={field} onChange={handleChange} value={form[field.name]}/>
         case 'object':
-          return <ObjectField field={field} onChange={handleChange}/>
+          return <ObjectField field={field} onChange={handleChange} value={form[field.name]}/>
         default:
-          return <StringField field={field} onChange={handleChange}/>
+          return <StringField field={field} onChange={handleChange} value={form[field.name]}/>
       }
     }
   }

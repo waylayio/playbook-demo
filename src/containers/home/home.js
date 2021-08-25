@@ -5,8 +5,11 @@ import MainMenu from '../../components/menu/menu'
 import ProvisioningForm from '../form/form'
 import SelectTemplate from './selectTemplate'
 import SelectResource from './selectResource'
+import NaturalLanguageInput from './naturalLanguageInput'
 import { Segment, concrete, colors } from '@waylay/react-components'
 import styled from '@emotion/styled'
+import { parsePlaybookLaunchCommand, matchPlaybookLaunchCommandToCatalog } from '../../lib/nlp'
+import useWindow from '../../hooks/useWindow'
 
 const LayoutContainer = styled('div')`
   display: flex;
@@ -35,8 +38,11 @@ const SidebarContainer = styled('div')`
 `
 
 function Home () {
+  const { addCustomToast } = useWindow()
+
   const [selectedTemplate, setSelectedTemplate] = useState()
   const [selectedResource, setSelectedResource] = useState()
+  const [taskVariables, setTaskVariables] = useState()
 
   const handleTemplateChange = (selectedOption) => {
     setSelectedTemplate(selectedOption)
@@ -44,10 +50,31 @@ function Home () {
 
   const clearTemplate = () => {
     setSelectedTemplate(undefined)
+    setSelectedResource(undefined)
   }
 
   const handleResourceChange = (selectedOption) => {
     setSelectedResource(selectedOption)
+  }
+
+  const handleNaturalLanguageTranscript = (transcript) => {
+    var cmd = parsePlaybookLaunchCommand(transcript || 'run Test Playbook on resource Testbed with input threshold set to 40')
+    if (cmd.error) {
+      addCustomToast(cmd.error, { appearance: 'error' })
+      return
+    }
+
+    matchPlaybookLaunchCommandToCatalog(cmd).then(() => {
+      if (cmd.error) {
+        addCustomToast(cmd.error, { appearance: 'error' })
+        return
+      }
+
+      // update input forms with tokens extracted from the spoken command
+      setSelectedTemplate({ value: cmd.playbook, label: cmd.playbook })
+      setSelectedResource({ value: cmd.resource, label: cmd.resource })
+      setTaskVariables(cmd.inputs)
+    })
   }
 
   if (!isAuthenticated()) {
@@ -60,6 +87,9 @@ function Home () {
         </SidebarContainer>
         <ContentContainer>
           <div id='main-content'>
+            <div id='select-segment'>
+              <NaturalLanguageInput onListening={clearTemplate} onTranscript={handleNaturalLanguageTranscript}/>
+            </div>
             <div id='select-segment'>
               <p> 1. Select template</p>
               <Segment>
@@ -79,14 +109,15 @@ function Home () {
                   <Segment>
                     <ProvisioningForm templateId={selectedTemplate ? selectedTemplate.value : undefined}
                                       resource={selectedResource ? selectedResource.value : undefined}
-                                      key={[selectedTemplate, selectedResource]} onSubmitOrCancel={clearTemplate}/>
+                                      key={[selectedTemplate, selectedResource]} 
+                                      onSubmitOrCancel={clearTemplate}
+                                      inputValues={taskVariables}/>
                   </Segment>
                 </div>)
               : null}
           </div>
         </ContentContainer>
       </LayoutContainer>
-
     )
   }
 }
