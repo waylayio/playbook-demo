@@ -27,7 +27,7 @@ function NumericField ({ field, onChange, value }) {
     <Form.Field
       required={field.mandatory}
     >
-      <label><p>{field.description || field.name} {field.mandatory ? <font color='red'>*</font> : null}</p></label>
+      <label><p>{field.displayName || field.name} {field.mandatory ? <font color='red'>*</font> : null}</p></label>
       <Form.Input
         style={{ width: '100%' }}
         control='input'

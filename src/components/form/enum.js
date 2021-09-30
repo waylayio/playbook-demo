@@ -29,7 +29,7 @@ function EnumField ({ field, onChange }) {
   })
   return (
     <Form.Field required={field.required}>
-      <label><p>{field.description || field.name} {field.mandatory ? <font color='red'>*</font> : null}</p></label>
+      <label><p>{field.displayName || field.name} {field.mandatory ? <font color='red'>*</font> : null}</p></label>
       <Select name={field.name} onChange={handleChange} options={optionData} />
     </Form.Field>)
 }

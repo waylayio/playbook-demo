@@ -35,7 +35,7 @@ function ObjectField ({ field, onChange, value }) {
         <Segment.Group>
           <Segment.Header>
             <div style={{ width: '100%', float: 'left' }}>
-              <p>{`Edit ${field.description || field.name}`} </p>
+              <p>{`Edit ${field.displayName || field.name}`} </p>
             </div>
             <div style={{ float: 'right', fontSize: '2em' }}>
               <Icon name='cancel' color='red' onClick={hideModal} />
@@ -61,7 +61,7 @@ function ObjectField ({ field, onChange, value }) {
   return (
     <div>
       <Form.Field required={field.mandatory}>
-        <label><p>{field.description || field.name} {field.mandatory ? <font color='red'>*</font> : null} <Icon name='edit' onClick={showModal} /></p></label>
+        <label><p>{field.displayName || field.name} {field.mandatory ? <font color='red'>*</font> : null} <Icon name='edit' onClick={showModal} /></p></label>
         <ReactJson name={field.name} src={json} onEdit={handleEdit} onAdd={handleEdit} onDelete={handleEdit} />
       </Form.Field>
     </div>
